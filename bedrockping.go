@@ -146,12 +146,12 @@ func ReadUnconnectedPong(reader *bufio.Reader, resp *Response) error {
 // Query makes a query to the specified address via the Minecraft Bedrock protocol,
 // if successful it returns a Response containing data from the pong packet.
 // resend is the interval that the ping packet is sent in case there is packet loss.
-func Query(address string, timeout time.Duration, resend time.Duration) (Response, error) {
+func Query(network string, address string, timeout time.Duration, resend time.Duration) (Response, error) {
 	var resp Response
 
 	deadline := time.Now().Add(timeout)
 
-	conn, err := net.DialTimeout("udp", address, timeout)
+	conn, err := net.DialTimeout(network, address, timeout)
 	if err != nil {
 		return resp, err
 	}
